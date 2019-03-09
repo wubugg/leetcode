@@ -1,6 +1,9 @@
 /**
  * Note: The returned array must be malloced, assume caller calls free().
 */
+#include <stdio.h>
+#include <stdlib.h>
+
 #define INT_MIN -1
 
 typedef struct{
@@ -96,16 +99,15 @@ int* twoSum(int* nums, int numsSize, int target)
     int *ret = (int*)malloc(sizeof(int) * 2);
     HashMap *map = CreateHashMap(nums, numsSize);
     int i;
-    for(i = 0; i < numsSize; i++)
-    {
+    for(i = 0; i < numsSize; i++){
         Put(i, nums[i], *map);
     }
 
     for(i = 0; i < numsSize; i++)
     {
         int val = target - nums[i];
-
         int key = Get(val, *map);
+
         if (-1 != key && key != i)
         {
             ret[0] = i;
@@ -114,4 +116,15 @@ int* twoSum(int* nums, int numsSize, int target)
         }
     }
     return NULL;
+}
+
+int main(void)
+{	
+	int nums[] = {7,11,15,16,17};
+	int target = 26;
+	int* ret = twoSum(nums, sizeof(nums), target);
+	for (int i = 0; i < 2; i++){
+		printf("%d, %d\n", ret[0], ret[1]);
+	}
+	return 0;
 }
